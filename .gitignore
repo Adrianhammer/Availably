@@ -1,0 +1,110 @@
+# ========================
+# .NET Core
+# ========================
+bin/
+obj/
+out/
+publish/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Windows image file caches
+Thumbs.db
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# ========================
+# Rider / IntelliJ
+# ========================
+.idea/
+*.sln.iml
+*.dotSettings.user
+
+# ========================
+# Visual Studio Code
+# ========================
+.vscode/
+
+# ========================
+# ASP.NET Core temp files
+# ========================
+*.db
+*.db-shm
+*.db-wal
+appsettings.*.json
+
+# ========================
+# Logs and test results
+# ========================
+logs/
+*.log
+TestResults/
+*.trx
+*.coverage
+*.coverage.*.xml
+
+# ========================
+# Entity Framework Core Migrations
+# ========================
+# Migrations folder is versioned, so do NOT ignore it
+# but ignore the snapshot and designer artifacts if needed
+# *_Snapshot.cs
+
+# ========================
+# Secrets & environment
+# ========================
+.env
+.env.*
+secrets.json
+secrets.*.json
+
+# ========================
+# NuGet Packages
+# ========================
+*.nupkg
+packages/
+project.lock.json
+project.fragment.lock.json
+
+# ========================
+# Docker
+# ========================
+Dockerfile*
+docker-compose*.yml
+docker-compose.override.yml
+.docker/
+
+# ========================
+# Node / Frontend (if added)
+# ========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+pnpm-lock.yaml
+dist/
+.next/
+
+# ========================
+# OS-generated
+# ========================
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+ehthumbs.db
+Desktop.ini
+
+# ========================
+# Miscellaneous
+# ========================
+*.pid.lock

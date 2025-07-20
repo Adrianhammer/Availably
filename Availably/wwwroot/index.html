@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Availably Prototype</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 2rem auto; }
+        section { border: 1px solid #ccc; padding: 1rem; margin-bottom: 1rem; border-radius: 4px; }
+        h2 { margin-top: 0; }
+        label { display: block; margin: .5rem 0 .2rem; }
+        input, button { padding: .5rem; font-size: 1rem; }
+        button { margin-top: .5rem; }
+        .result { margin-top: .5rem; font-size: .9rem; color: #006; }
+    </style>
+</head>
+<body>
+
+<h1>Availably API Prototype</h1>
+
+<!-- Create Session -->
+<section id="create-session">
+    <h2>Create Session</h2>
+    <form id="create-session-form">
+        <label for="session-name">Session Name:</label>
+        <input id="session-name" type="text" required />
+        <button type="submit">Create</button>
+    </form>
+    <div id="create-session-result" class="result"></div>
+</section>
+
+<!-- Register Participant -->
+<section id="register-participant">
+    <h2>Register Participant</h2>
+    <form id="register-participant-form">
+        <label for="link-token">Link Token:</label>
+        <input id="link-token" type="text" required />
+        <button type="submit">Register</button>
+    </form>
+    <div id="register-participant-result" class="result"></div>
+</section>
+
+<!-- Toggle Availability -->
+<section id="toggle-availability">
+    <h2>Toggle Availability</h2>
+    <form id="toggle-availability-form">
+        <label for="ts-session-id">Session ID:</label>
+        <input id="ts-session-id" type="text" required />
+        <label for="ts-participant-id">Participant ID:</label>
+        <input id="ts-participant-id" type="text" required />
+        <label for="ts-date">Date:</label>
+        <input id="ts-date" type="date" required />
+        <label>
+            <input id="ts-is-free" type="checkbox" />
+            Mark as Free
+        </label>
+        <button type="submit">Toggle</button>
+    </form>
+    <div id="toggle-availability-result" class="result"></div>
+</section>
+
+<!-- Get Mutual Free Dates -->
+<section id="get-free-dates">
+    <h2>Get Mutual Free Dates</h2>
+    <form id="get-free-dates-form">
+        <label for="gf-session-id">Session ID:</label>
+        <input id="gf-session-id" type="text" required />
+        <button type="submit">Fetch</button>
+    </form>
+    <div id="get-free-dates-result" class="result"></div>
+</section>
+
+<script>
+    const API_BASE = ''; // e.g. '/api' or 'https://localhost:5001/api'
+
+    // Create Session
+    document.getElementById('create-session-form')
+        .addEventListener('submit', async e => {
+            e.preventDefault();
+            const name = document.getElementById('session-name').value;
+            const res = await fetch(`${API_BASE}/sessions`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name })
+            });
+            const json = await res.json();
+            document.getElementById('create-session-result')
+                .textContent = `ID: ${json.sessionId}, Token: ${json.linkToken}`;
+        });
+
+    // Register Participant
+    document.getElementById('register-participant-form')
+        .addEventListener('submit', async e => {
+            e.preventDefault();
+            const token = document.getElementById('link-token').value;
+            const res = await fetch(`${API_BASE}/participants/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token })
+            });
+            const json = await res.json();
+            document.getElementById('register-participant-result')
+                .textContent = `Participant ID: ${json.participantId}`;
+        });
+
+    // Toggle Availability
+    document.getElementById('toggle-availability-form')
+        .addEventListener('submit', async e => {
+            e.preventDefault();
+            const sessionId = document.getElementById('ts-session-id').value;
+            const participantId = document.getElementById('ts-participant-id').value;
+            const date = document.getElementById('ts-date').value;
+            const isFree = document.getElementById('ts-is-free').checked;
+            const res = await fetch(`${API_BASE}/availability/toggle`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ sessionId, participantId, date, isFree })
+            });
+            document.getElementById('toggle-availability-result')
+                .textContent = res.ok ? 'Toggled successfully' : 'Error toggling';
+        });
+
+    // Get Mutual Free Dates
+    document.getElementById('get-free-dates-form')
+        .addEventListener('submit', async e => {
+            e.preventDefault();
+            const sessionId = document.getElementById('gf-session-id').value;
+            const res = await fetch(`${API_BASE}/sessions/${sessionId}/free-dates`);
+            const dates = await res.json();
+            document.getElementById('get-free-dates-result')
+                .textContent = dates.join(', ');
+        });
+</script>
+</body>
+</html>

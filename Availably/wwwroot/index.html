@@ -18,15 +18,15 @@
 
 <h1>Availably API Prototype</h1>
 
-<!-- Create Session -->
-<section id="create-session">
-    <h2>Create Session</h2>
-    <form id="create-session-form">
-        <label for="session-name">Session Name:</label>
-        <input id="session-name" type="text" required />
+<!-- Create Group -->
+<section id="create-group">
+    <h2>Create Group</h2>
+    <form id="create-group-form">
+        <label for="group-name">Group Name:</label>
+        <input id="group-name" type="text" required />
         <button type="submit">Create</button>
     </form>
-    <div id="create-session-result" class="result"></div>
+    <div id="create-group-result" class="result"></div>
 </section>
 
 <!-- Register Participant -->
@@ -44,8 +44,8 @@
 <section id="toggle-availability">
     <h2>Toggle Availability</h2>
     <form id="toggle-availability-form">
-        <label for="ts-session-id">Session ID:</label>
-        <input id="ts-session-id" type="text" required />
+        <label for="ts-group-id">Group ID:</label>
+        <input id="ts-group-id" type="text" required />
         <label for="ts-participant-id">Participant ID:</label>
         <input id="ts-participant-id" type="text" required />
         <label for="ts-date">Date:</label>
@@ -63,8 +63,8 @@
 <section id="get-free-dates">
     <h2>Get Mutual Free Dates</h2>
     <form id="get-free-dates-form">
-        <label for="gf-session-id">Session ID:</label>
-        <input id="gf-session-id" type="text" required />
+        <label for="gf-group-id">Group ID:</label>
+        <input id="gf-group-id" type="text" required />
         <button type="submit">Fetch</button>
     </form>
     <div id="get-free-dates-result" class="result"></div>
@@ -73,19 +73,19 @@
 <script>
     const API_BASE = ''; // e.g. '/api' or 'https://localhost:5001/api'
 
-    // Create Session
-    document.getElementById('create-session-form')
+    // Create Group
+    document.getElementById('create-group-form')
         .addEventListener('submit', async e => {
             e.preventDefault();
-            const name = document.getElementById('session-name').value;
-            const res = await fetch(`${API_BASE}/sessions`, {
+            const name = document.getElementById('group-name').value;
+            const res = await fetch(`${API_BASE}/groups`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name })
             });
             const json = await res.json();
-            document.getElementById('create-session-result')
-                .textContent = `ID: ${json.sessionId}, Token: ${json.linkToken}`;
+            document.getElementById('create-group-result')
+                .textContent = `ID: ${json.groupId}, Token: ${json.linkToken}`;
         });
 
     // Register Participant
@@ -107,14 +107,14 @@
     document.getElementById('toggle-availability-form')
         .addEventListener('submit', async e => {
             e.preventDefault();
-            const sessionId = document.getElementById('ts-session-id').value;
+            const groupId = document.getElementById('ts-group-id').value;
             const participantId = document.getElementById('ts-participant-id').value;
             const date = document.getElementById('ts-date').value;
             const isFree = document.getElementById('ts-is-free').checked;
             const res = await fetch(`${API_BASE}/availability/toggle`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ sessionId, participantId, date, isFree })
+                body: JSON.stringify({ groupId, participantId, date, isFree })
             });
             document.getElementById('toggle-availability-result')
                 .textContent = res.ok ? 'Toggled successfully' : 'Error toggling';
@@ -124,8 +124,8 @@
     document.getElementById('get-free-dates-form')
         .addEventListener('submit', async e => {
             e.preventDefault();
-            const sessionId = document.getElementById('gf-session-id').value;
-            const res = await fetch(`${API_BASE}/sessions/${sessionId}/free-dates`);
+            const groupId = document.getElementById('gf-group-id').value;
+            const res = await fetch(`${API_BASE}/groups/${groupId}/free-dates`);
             const dates = await res.json();
             document.getElementById('get-free-dates-result')
                 .textContent = dates.join(', ');

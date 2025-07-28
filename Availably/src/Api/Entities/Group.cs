@@ -1,6 +1,7 @@
 namespace Availably.Api.Entities;
 
-public class Session
+// Represents a "group" for which members report availability
+public class Group
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = default!;

@@ -4,7 +4,7 @@
   <p>An easy time scheduler for you and your friends!</p>
 	<img alt="Static Badge" src="https://img.shields.io/badge/Language-C%23-green?style=flat">
  	<img alt="Static Badge" src="https://img.shields.io/badge/Framework-.NET-violet?style=flat">
-  	<img alt="Static Badge" src="https://img.shields.io/badge/Database-SQLite-blue?style=flat">
+  	<img alt="Static Badge" src="https://img.shields.io/badge/Database-Supabase-teal?style=flat">
 </div>
 
 
@@ -22,7 +22,7 @@ Availably ***will be*** an easy time scheduler so you and your friends can bette
 # 🛠️ Technologies Used
 - Language: C# 
 - Framework: .NET (9.0)
-- Database: SQLite
+- Database: PostgreSQL (Supabase)
 
 # 🗺️ Project Roadmap
 
